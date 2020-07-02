@@ -36,10 +36,11 @@
   margin-top: 2em;
   column-gap: var(--gap);
   row-gap: var(--gap);
+  justify-items: stretch;
 }
 .btn {
-  width: var(--button-size);
-  height: var(--button-size);
+  width: 100%;
+  height: 100%;
   background-color: var(--blackButton);
   margin: auto auto;
   text-align: center;
@@ -47,7 +48,9 @@
   text-transform: uppercase;
   cursor: pointer;
   vertical-align: middle;
-  line-height: 200%;
+  display: grid;
+  align-items: center;
+
   /* disables select text on buttons */
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -55,7 +58,7 @@
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+                        supported by Chrome, Edge, Opera and Firefox */
 }
 .function {
   background-color: var(--grayButton);
@@ -64,7 +67,6 @@
   color: black !important;
   font-size: 1.5em;
   max-width: 100%;
-  /* word-wrap: break-word; */
   overflow-x: hidden;
   text-align: right;
   direction: rtl;
@@ -74,12 +76,8 @@
   font-size: 3em;
 }
 .plus {
-  grid-row-start: 4;
-  grid-row-end: 6;
-  grid-column-start: 4;
-  grid-column-end: 5;
-  padding-top: 57px;
-  height: 75%;
+  grid-column: 4;
+  grid-row: 4 / 6;
 }
 .btn:hover {
   transform: scale(0.9);
