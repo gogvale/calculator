@@ -44,6 +44,14 @@
   cursor: pointer;
   vertical-align: middle;
   line-height: 250%;
+  /* disables select text on buttons */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 .btn.text {
   font-size: 40px;
@@ -70,4 +78,7 @@
   grid-column-start: 4;
   grid-column-end: 5;
   height: 100%;
+}
+.btn:hover {
+  transform: scale(0.9);
 }
