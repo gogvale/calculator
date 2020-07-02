@@ -1,6 +1,7 @@
 :root {
   --case: #5a5c68;
   --orange: #f90;
+  --red: #f30;
   --display: #c1d797;
   --blackButton: #3d4049;
   --grayButton: #bcc1c7;
@@ -20,6 +21,9 @@
 #ac {
   background-color: var(--orange);
   word-wrap: break-word;
+}
+#del {
+  background-color: var(--red);
 }
 #display {
   background-color: var(--display);
@@ -43,7 +47,7 @@
   text-transform: uppercase;
   cursor: pointer;
   vertical-align: middle;
-  line-height: 250%;
+  line-height: 200%;
   /* disables select text on buttons */
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -52,9 +56,6 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-}
-.btn.text {
-  font-size: 40px;
 }
 .function {
   background-color: var(--grayButton);
