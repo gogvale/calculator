@@ -3,7 +3,7 @@ let currentNumber = [],
   hasFraction = false,
   oldNumber,
   operator;
-const precision = 10 ** 4;
+const precision = 4;
 const topDisplay = document.querySelector("#top");
 const bottomDisplay = document.querySelector("#bottom");
 
@@ -50,8 +50,15 @@ function deleteDigit() {
 function eval(el) {
   el = el.target.textContent;
   operator = el;
-  // oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
-  console.log(el);
+  oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
+  updateDOM();
+}
+function reset() {
+  currentNumber = [];
+  fraction = [];
+  hasFraction = false;
+  oldNumber = null;
+  operator = null;
   updateDOM();
 }
 const numbers = document.querySelectorAll(".number");

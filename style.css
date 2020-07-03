@@ -69,11 +69,11 @@
   max-width: 100%;
   overflow-x: hidden;
   text-align: right;
-  direction: rtl;
   font-family: "Orbitron", sans-serif;
 }
 #bottom {
   font-size: 3em;
+  direction: rtl;
 }
 .plus {
   grid-column: 4;
