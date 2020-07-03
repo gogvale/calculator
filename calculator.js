@@ -1,5 +1,6 @@
 let currentNumber = 0,
-  fraction = 0.123,
+  fraction = 0,
+  fractionLength = 0,
   hasFraction = false,
   oldNumber,
   operator;
@@ -9,7 +10,7 @@ const bottomDisplay = document.querySelector("#bottom");
 
 function toDecimalFormat(number) {
   if (number < 1 && number > 0) return ("" + number).split(".")[1];
-  let fraction = "" + Math.round((number % 1) * precision) / precision;
+  let fraction = "" + Math.floor((number % 1) * precision) / precision;
   fraction = "." + fraction.split(".")[1];
 
   let splitNumber = [];
@@ -17,7 +18,7 @@ function toDecimalFormat(number) {
 
   do {
     splitNumber.unshift(number % 1000);
-    number = Math.round(number / 1000);
+    number = Math.floor(number / 1000);
   } while (number > 0);
 
   number = splitNumber.join(",");
@@ -39,10 +40,15 @@ function addDigit(digit) {
   console.log(digit);
   digit = digit.target.textContent;
   if (digit !== ".") {
-    digit = +digit;
-    let fraction = currentNumber % 1;
-    currentNumber = Math.floor(currentNumber);
-    currentNumber = currentNumber * 10 + digit + fraction;
+    if (hasFraction) {
+      fractionLength++;
+      fraction += digit * 10 ** -fractionLength;
+    } else {
+      digit = +digit;
+      let fraction = currentNumber % 1;
+      currentNumber = Math.floor(currentNumber);
+      currentNumber = currentNumber * 10 + digit + fraction;
+    }
   } else {
     hasFraction = true;
   }
@@ -50,11 +56,21 @@ function addDigit(digit) {
   updateDOM();
 }
 function deleteDigit() {
-  if (currentNumber === 0) return;
-  currentNumber = "" + currentNumber;
-  currentNumber = currentNumber.split("");
-  currentNumber.pop();
-  currentNumber = currentNumber.join("");
+  if (fraction > 0) {
+    fractionLength--;
+    fraction =
+      Math.floor(fraction * 10 ** fractionLength) / 10 ** fractionLength;
+  } else {
+    if (currentNumber === 0) return;
+    if (fractionLength <= 0) {
+      hasFraction = false;
+      fractionLength = 0;
+    }
+    currentNumber = "" + currentNumber;
+    currentNumber = currentNumber.split("");
+    currentNumber.pop();
+    currentNumber = currentNumber.join("");
+  }
   updateDOM();
 }
 
