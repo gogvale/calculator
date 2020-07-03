@@ -29,6 +29,12 @@ function updateDOM() {
 }
 function addDigit(digit) {
   digit = digit.target.textContent;
+  if (operator === "=") {
+    operator = null;
+    currentNumber = [];
+    oldNumber = [];
+  }
+
   if (digit !== ".") {
     if (hasFraction) fraction.push(digit);
     else currentNumber.push(digit);
@@ -49,8 +55,42 @@ function deleteDigit() {
 
 function eval(el) {
   el = el.target.textContent;
-  operator = el;
-  oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
+  if (el === "±") {
+    if (currentNumber[0] === "-") currentNumber.shift();
+    else currentNumber.unshift("-");
+    updateDOM();
+    return;
+  }
+  if (el === "=" || !!operator) {
+    result = oldNumber;
+    newValue = Number(currentNumber.join("") + "." + fraction.join(""));
+    console.log(result, operator, newValue);
+    switch (operator) {
+      case "+":
+        result += newValue;
+        break;
+      case "-":
+        result -= newValue;
+        break;
+      case "×":
+        result *= newValue;
+        break;
+      case "÷":
+        if (newValue !== 0) result /= newValue;
+        else alert("Can't divide by 0!");
+        break;
+    }
+    currentNumber = String(Math.floor(result)).split("");
+    fraction = String(result % 1)
+      .split("")
+      .slice(0, precision);
+
+    operator = el;
+  } else {
+    operator = el;
+    oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
+    currentNumber = [];
+  }
   updateDOM();
 }
 function reset() {
