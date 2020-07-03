@@ -15,6 +15,7 @@ function toDecimalFormat(number, isFraction = false) {
     numberArray.unshift(number % 1000);
     number = Math.floor(number / 1000);
   }
+  numberArray.unshift(0);
   return numberArray.join(",");
 }
 function updateDOM() {
@@ -47,10 +48,6 @@ function deleteDigit() {
   updateDOM();
 }
 
-function initialize() {
-  const numbers = document.querySelectorAll(".number");
-  numbers.forEach((n) => n.addEventListener("click", addDigit));
-}
-initialize();
-
+const numbers = document.querySelectorAll(".number");
+numbers.forEach((n) => n.addEventListener("click", addDigit));
 updateDOM();
