@@ -27,7 +27,7 @@
 }
 #display {
   background-color: var(--display);
-  height: 10vh;
+  min-height: 10vh;
   padding: 5px;
 }
 #input {
