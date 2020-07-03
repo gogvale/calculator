@@ -1,31 +1,21 @@
-let currentNumber = 0,
-  fraction = 0,
-  fractionLength = 0,
+let currentNumber = [],
+  fraction = [],
   hasFraction = false,
   oldNumber,
   operator;
-const precision = 10 ** 9;
+const precision = 10 ** 4;
 const topDisplay = document.querySelector("#top");
 const bottomDisplay = document.querySelector("#bottom");
 
-function toDecimalFormat(number) {
-  if (number < 1 && number > 0) return ("" + number).split(".")[1];
-  let fraction = "" + Math.floor((number % 1) * precision) / precision;
-  fraction = "." + fraction.split(".")[1];
-
-  let splitNumber = [];
-  number = Math.floor(number);
-
-  do {
-    splitNumber.unshift(number % 1000);
+function toDecimalFormat(number, isFraction = false) {
+  if (isFraction) return number.join("");
+  number = Number(number.join(""));
+  numberArray = [];
+  while (number > 0) {
+    numberArray.unshift(number % 1000);
     number = Math.floor(number / 1000);
-  } while (number > 0);
-
-  number = splitNumber.join(",");
-  if (fraction > 0) {
-    number += fraction;
   }
-  return number;
+  return numberArray.join(",");
 }
 function updateDOM() {
   if (!oldNumber) oldNumber = "";
@@ -33,22 +23,14 @@ function updateDOM() {
   topDisplay.textContent = `${oldNumber} ${operator}`;
 
   bottomDisplay.textContent = hasFraction
-    ? toDecimalFormat(currentNumber) + "." + toDecimalFormat(fraction)
+    ? toDecimalFormat(currentNumber) + "." + toDecimalFormat(fraction, true)
     : toDecimalFormat(currentNumber);
 }
 function addDigit(digit) {
-  console.log(digit);
   digit = digit.target.textContent;
   if (digit !== ".") {
-    if (hasFraction) {
-      fractionLength++;
-      fraction += digit * 10 ** -fractionLength;
-    } else {
-      digit = +digit;
-      let fraction = currentNumber % 1;
-      currentNumber = Math.floor(currentNumber);
-      currentNumber = currentNumber * 10 + digit + fraction;
-    }
+    if (hasFraction) fraction.push(digit);
+    else currentNumber.push(digit);
   } else {
     hasFraction = true;
   }
@@ -56,21 +38,11 @@ function addDigit(digit) {
   updateDOM();
 }
 function deleteDigit() {
-  if (fraction > 0) {
-    fractionLength--;
-    fraction =
-      Math.floor(fraction * 10 ** fractionLength) / 10 ** fractionLength;
-  } else {
-    if (currentNumber === 0) return;
-    if (fractionLength <= 0) {
-      hasFraction = false;
-      fractionLength = 0;
-    }
-    currentNumber = "" + currentNumber;
-    currentNumber = currentNumber.split("");
-    currentNumber.pop();
-    currentNumber = currentNumber.join("");
-  }
+  if (hasFraction) {
+    fraction.pop();
+    if (fraction.length === 0) hasFraction = false;
+  } else currentNumber.pop();
+
   updateDOM();
 }
 
@@ -80,5 +52,4 @@ function initialize() {
 }
 initialize();
 
-currentNumber = 1234;
 updateDOM();
