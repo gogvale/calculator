@@ -29,10 +29,8 @@ function updateDOM() {
 }
 function addDigit(digit) {
   digit = digit.target.textContent;
-  if (operator === "=") {
-    operator = null;
-    currentNumber = [];
-    oldNumber = [];
+  if (operator === "=" || operator == null) {
+    reset();
   }
 
   if (digit !== ".") {
@@ -99,19 +97,19 @@ function eval(el) {
   } else {
     operator = el;
     oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
-    currentNumber = [];
-    fraction = [];
-    hasFraction = false;
+    reset(true);
   }
   updateDOM();
 }
-function reset() {
+function reset(partial = false) {
   currentNumber = [];
   fraction = [];
   hasFraction = false;
-  oldNumber = null;
-  operator = null;
-  updateDOM();
+  if (!partial) {
+    oldNumber = null;
+    operator = null;
+    updateDOM();
+  }
 }
 const numbers = document.querySelectorAll(".number");
 const functions = document.querySelectorAll(".function");
