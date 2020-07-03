@@ -83,6 +83,8 @@ function eval(el) {
           return;
         }
         break;
+      default:
+        result = newValue;
     }
     currentNumber = String(Math.floor(result)).split("");
     fraction = String(result % 1)
@@ -92,12 +94,14 @@ function eval(el) {
     bottomDisplay.textContent =
       Math.round(result * 10 ** precision) / 10 ** precision;
     topDisplay.textContent = `${oldNumber} ${operator} ${newValue} = `;
-    operator = el;
+    operator = null;
     return;
   } else {
     operator = el;
     oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
     currentNumber = [];
+    fraction = [];
+    hasFraction = false;
   }
   updateDOM();
 }
