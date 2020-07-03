@@ -11,11 +11,10 @@ function toDecimalFormat(number, isFraction = false) {
   if (isFraction) return number.join("");
   number = Number(number.join(""));
   numberArray = [];
-  while (number > 0) {
+  do {
     numberArray.unshift(number % 1000);
     number = Math.floor(number / 1000);
-  }
-  numberArray.unshift(0);
+  } while (number > 0);
   return numberArray.join(",");
 }
 function updateDOM() {
@@ -48,6 +47,15 @@ function deleteDigit() {
   updateDOM();
 }
 
+function eval(el) {
+  el = el.target.textContent;
+  operator = el;
+  // oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
+  console.log(el);
+  updateDOM();
+}
 const numbers = document.querySelectorAll(".number");
+const functions = document.querySelectorAll(".function");
 numbers.forEach((n) => n.addEventListener("click", addDigit));
+functions.forEach((n) => n.addEventListener("click", eval));
 updateDOM();
