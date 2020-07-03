@@ -22,9 +22,10 @@ function updateDOM() {
   if (!operator) operator = "";
   topDisplay.textContent = `${oldNumber} ${operator}`;
 
-  bottomDisplay.textContent = hasFraction
-    ? toDecimalFormat(currentNumber) + "." + toDecimalFormat(fraction, true)
-    : toDecimalFormat(currentNumber);
+  bottomDisplay.textContent =
+    hasFraction && fraction.length > 0
+      ? toDecimalFormat(currentNumber) + "." + toDecimalFormat(fraction, true)
+      : toDecimalFormat(currentNumber);
 }
 function addDigit(digit) {
   digit = digit.target.textContent;
