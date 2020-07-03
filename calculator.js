@@ -77,7 +77,11 @@ function eval(el) {
         break;
       case "÷":
         if (newValue !== 0) result /= newValue;
-        else alert("Can't divide by 0!");
+        else {
+          alert("Can't divide by 0!");
+          bottomDisplay.textContent = "∞";
+          return;
+        }
         break;
     }
     currentNumber = String(Math.floor(result)).split("");
@@ -85,7 +89,11 @@ function eval(el) {
       .split("")
       .slice(0, precision);
 
+    bottomDisplay.textContent =
+      Math.round(result * 10 ** precision) / 10 ** precision;
+    topDisplay.textContent = `${oldNumber} ${operator} ${newValue} = `;
     operator = el;
+    return;
   } else {
     operator = el;
     oldNumber = Number(currentNumber.join("") + "." + fraction.join(""));
